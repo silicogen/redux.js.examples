@@ -1,50 +1,43 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createStore } from 'redux'
 
-const selectShopItems = (state) => state.shop.items;
-const selectTaxPercent = (state) => state.shop.taxPercent;
+/**
+ * This is a reducer - a function that takes a current state value and an
+ * action object describing "what happened", and returns a new state value.
+ * A reducer's function signature is: (state, action) => newState
+ *
+ * The Redux state should contain only plain JS objects, arrays, and primitives.
+ * The root state value is usually an object.  It's important that you should
+ * not mutate the state object, but return a new object if the state changes.
+ *
+ * You can use any conditional logic you want in a reducer. In this example,
+ * we use a switch statement, but it's not required.
+ */
+function counterReducer(state = { value: 0 }, action) {
+  switch (action.type) {
+    case 'counter/incremented':
+      return { value: state.value + 1 }
+    case 'counter/decremented':
+      return { value: state.value - 1 }
+    default:
+      return state
+  }
+}
 
-const selectItemsByCategory = createSelector(
-      // Usual first input - extract value from `state`
-      state => state.shop.items,
-      // Take the second arg, `category`, and forward to the output selector
-      (state, category) => "fruit"
-    ,
-    // Output selector gets (`items, category)` as args
-    (items, category) => items.filter(item => item.category === category)
-  )
+// Create a Redux store holding the state of your app.
+// Its API is { subscribe, dispatch, getState }.
+let store = createStore(counterReducer)
 
-const selectSubtotal = createSelector(selectShopItems, (items) =>
-    items.reduce((subtotal, item) => 
-    subtotal + item.value, 0)
-);
+// You can use subscribe() to update the UI in response to state changes.
+// Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
+// There may be additional use cases where it's helpful to subscribe as well.
 
-const selectCount = createSelector(selectShopItems, (items) => items.length);
+store.subscribe(() => console.log(store.getState()))
 
-const selectTax = createSelector(
-    selectSubtotal, 
-    selectTaxPercent,
-    (subtotal, taxPercent) => subtotal * (taxPercent / 100)
-);
-
-const selectTotal = createSelector(
-    selectSubtotal,
-    selectTax,
-    (subtotal, tax) => ({ total: subtotal + tax })
-);
-
-const exampleState = {
-    shop: {
-        taxPercent: 8,
-        items: [
-            { name: "apple", value: 1.2, category: "fruit" },
-            { name: "orange", value: 0.95, category: "fruit" },
-            { name: "potato", value: 0.5, category: "vegetable" },
-        ],
-    },
-};
-
-console.log(selectSubtotal(exampleState)); // 2.15
-console.log(selectTax(exampleState)); // 0.172
-console.log(selectTotal(exampleState)); // { total: 2.322 }
-console.log(selectCount(exampleState)); // 3
-console.log(selectItemsByCategory(exampleState)); // 3
+// The only way to mutate the internal state is to dispatch an action.
+// The actions can be serialized, logged or stored and later replayed.
+store.dispatch({ type: 'counter/incremented' })
+// {value: 1}
+store.dispatch({ type: 'counter/incremented' })
+// {value: 2}
+store.dispatch({ type: 'counter/decremented' })
+// {value: 1}

@@ -1,4 +1,4 @@
 import  "./mod1";
 export const App = () => <div>
-    <h1>Hello Reselect</h1>
+    <h1>Hello Redux</h1>
 </div>

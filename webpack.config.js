@@ -35,7 +35,7 @@ const configDev = {
         static: path.join(__dirname, 'public'),
         hot: true,
         liveReload: true,
-        port: 3001,
+        port: 3002,
     }
 }
 
