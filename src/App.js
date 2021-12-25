@@ -1,9 +1,7 @@
-import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate
+  Route
 } from "react-router-dom";
 
 import { Navbar } from "./app/Navbar";
@@ -34,11 +32,11 @@ function App() {
           <Route exact path="/editPost/:postId" component={EditPostForm} />
           {/* <Navigate to="/" />  */}
         </Routes >
-   
+
       </div>
-      
+
     </Router>
-     
+
   </>;
 }
 
