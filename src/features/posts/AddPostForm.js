@@ -1,7 +1,7 @@
 import  { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { nanoid } from '@reduxjs/toolkit'
-
+import "../../index.css"
 import { postAdded } from './postsSlice'
 
 export const AddPostForm = () => {
@@ -28,7 +28,10 @@ export const AddPostForm = () => {
   return (
     <section>
       <h2>Add a New Post</h2>
-      <form>
+      <form 
+         className='addPostForm'
+         style={{display:"flex", flexFlow:"column"}}
+      >
         <label htmlFor="postTitle">Post Title:</label>
         <input
           type="text"
