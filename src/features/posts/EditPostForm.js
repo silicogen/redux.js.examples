@@ -20,8 +20,7 @@ export const EditPostForm = ({ match }) => {
 
   const onSavePostClicked = () => {
     if (title && content) {
-      dispatch(postUpdated(
-        {
+      dispatch(postUpdated({
           id: postId,
           title,
           content
