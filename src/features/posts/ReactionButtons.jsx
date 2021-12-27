@@ -25,7 +25,7 @@ export const ReactionButtons = ({ post }) => {
         }
       >
         {emoji}
-        {/* {post.reactions[name]} */}
+        {post.reactions[name]}
       </button>
     )
   })
